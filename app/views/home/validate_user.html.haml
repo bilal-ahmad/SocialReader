@@ -1,0 +1,16 @@
+-#%script
+-#  :plain
+-#    -#function redirect(url) { return window.top.location.replace(url); }
+-#    -#permission_url = "#{@auth_url}";
+-#    -#redirect(permission_url)
+
+
+.validate-user-container
+  #validate-user
+    .btn
+      = link_to 'Sign In', @auth_url
+
+
+
+.validate-loading
+  = image_tag 'validate-loading.gif'

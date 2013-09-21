@@ -1,0 +1,69 @@
+#active_admin_content.without_sidebar
+  #main_content_wrapper
+    #main_content
+      .panel
+        %h3 Source Details
+        .panel_contents
+          #attributes_table_source_3.attributes_table.source
+            %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+              %tbody
+                %tr.row
+                  %th Id
+                  %td=@source.id
+                %tr.row
+                  %th Name
+                  %td=@source.name
+                %tr.row
+                  %th Logo
+                  %td=link_to image_tag(@source.logo, width: 40, height: 40), @source.url
+                %tr.row
+                  %th Url
+                  %td=@source.url
+                %tr.row
+                  %th Status
+                  %td=@source.status
+                %tr.row
+                  %th Created At
+                  %td=@source.created_at
+                %tr.row
+                  %th Updated At
+                  %td=@source.updated_at
+      %h3 Feeds
+      %table#index_table_sources.index_table.index{:border => "0", :cellpadding => "0", :cellspacing => "0", :paginator => "true"}
+        %thead
+          %tr
+            %th Name
+            %th URL
+            %th Limit
+            %th Status
+            %th Image
+        %tbody
+          - i = 0
+          - @source.feeds.each do |feed|
+            %tr.rowP{:class => i%2 == 1 ? 'odd' : 'even'}
+              %td=feed.name
+              %td=feed.url
+              %td=feed.limit
+              %td=feed.status
+              %td=feed.image.present? ? image_tag(feed.image) : image_tag(@source.logo, :width => 20, height: 20)
+              - i = i + 1
+      #active_admin_comments_for_source_3.comments.source.panel
+        %h3 Comments (0)
+        .panel_contents
+          %span.empty No comments yet.
+          %form#new_active_admin_comment.inline_form.formtastic.active_admin_comment{"accept-charset" => "UTF-8", :action => "/admin/comments", :method => "post", :novalidate => "novalidate"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "LX9939PnOM1+N0oJ56u9WzkOMJSy9n0naCcytNG5qIc="}/
+            %fieldset.inputs
+              %ol
+                %li#active_admin_comment_resource_type_input.hidden.input.optional
+                  %input#active_admin_comment_resource_type{:name => "active_admin_comment[resource_type]", :type => "hidden", :value => "Source"}/
+                %li#active_admin_comment_resource_id_input.hidden.input.required
+                  %input#active_admin_comment_resource_id{:name => "active_admin_comment[resource_id]", :type => "hidden", :value => "3"}/
+                %li#active_admin_comment_body_input.text.input.required
+                  %textarea#active_admin_comment_body{:cols => "80", :name => "active_admin_comment[body]", :rows => "8"}
+            %fieldset.actions
+              %ol
+                %li#active_admin_comment_submit_action.action.input_action
+                  %input{:name => "commit", :type => "submit", :value => "Add Comment"}/

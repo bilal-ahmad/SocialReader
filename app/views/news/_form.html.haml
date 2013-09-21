@@ -1,0 +1,22 @@
+= form_for @news do |f|
+  - if @news.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@news.errors.count, "error")} prohibited this news from being saved:"
+      %ul
+        - @news.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :headline
+    = f.text_field :headline
+  .field
+    = f.label :description
+    = f.text_area :description
+  .field
+    = f.label :image
+    = f.text_field :image
+  .field
+    = f.label :source_id
+    = f.number_field :source_id
+  .actions
+    = f.submit 'Save'

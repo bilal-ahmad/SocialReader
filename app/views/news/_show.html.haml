@@ -1,0 +1,148 @@
+= hidden_field_tag 'link', news_url(@news)
+= hidden_field_tag 'title', @news.title
+= hidden_field_tag 'description', format_text(100, @news.content)
+= hidden_field_tag 'image', @news.image
+= hidden_field_tag 'caption',@news.source.name
+#container-inner
+  .news-detail
+    .news-detail-sharing
+      %button.share.share-btn Share
+      %a.tweet-btn{:href => "http://twitter.com/intent/tweet?url=", :target => "_blank", :title => "Share this article on Twitter"} Tweet
+      %button.send.send-btn Send
+    .news-description
+      %h1
+        =link_to "#{CGI.escapeHTML(@news.title)}", news_path(@news, :fb_id => "#{@user.fb_id if @user}" )
+      .news-source
+        = link_to image_tag(@news.source.logo, :class => "source-tag"), news_path(@news)
+        .news-source-info
+          %span.news-source-name
+            =@news.source.name.titleize
+          %span.news-date
+            =time_ago_in_words(@news.published_at)
+        .news-original-post
+          =link_to "See original Post on #{@news.source.name}", @news.url, :target => '_blank'
+      .fb-like{"data-href" => "http://sr-beta.herokuapp.com", "data-send" => "false", "data-show-faces" => "true", "data-width" => "450"}
+    - if @news.image.present?
+      .news-image
+        = image_tag(@news.image)
+    .news-description-detail
+      %p
+        = @news.content.present? ? @news.content.html_safe : @news.summary.html_safe
+      .news-detail-sharing.no-border
+        %button.share-btn{:onclick => "postToFeed(); return false;"} Share
+        %a.tweet-btn{:href => "http://twitter.com/intent/tweet?url=", :target => "_blank", :title => "Share this article on Twitter"} Tweet
+        %button.send-btn{:onclick => "postToFeed(); return false;"} Send
+    .news-detail-comment
+      .fb-comments{"data-href" => "http://sr-beta.herokuapp.com", "data-num-posts" => "10", "data-width" => "600"}
+      .clr
+
+  .right-panel
+    %h3 Related News
+    .related-news-container
+      - @related_news.each do |news|
+        .related-news
+          .title
+            =link_to CGI.escapeHTML(news.title), news_path(news), :data => news.id, :class => 'call-event'
+            .news-source
+              = link_to image_tag(news.source.logo, :class => "source-tag"), news_path(news)
+              .news-source-info
+                %span.news-source-name
+                  =news.source.name.titleize
+                %span.news-date
+                  =time_ago_in_words(news.published_at)
+          .source-logo
+            = link_to image_tag(news.image.present? ? news.image : news.source.logo, :width => 50, :height => 50), news_path(news), :class => 'call-event', :data => news.id
+          .clr
+
+#fb-root
+%script{:src => "http://connect.facebook.net/en_US/all.js"}
+:javascript
+    function facebook_post(){
+      if("#{@user.try(:sharing)}" == "true"){
+        FB.getLoginStatus(function (response) {
+            if (response.authResponse) {
+              FB.api('/me/news.reads', 'post', { article: "#{news_url(@news, :fb_id => "#{@user.fb_id if @user}")}", access_token: response.authResponse.accessToken }, function(response) {
+                if (!response || response.error) {
+                  console.log(response);
+                } else {
+                }
+              });
+            } else {
+                // do something...maybe show a login prompt
+            }
+        }, { scope:'publish_actions' });
+      }
+      else{
+        //alert("Not posting on facebook.");
+      }
+    }
+  $(document).ready(function() {
+    FB.init({
+      appId  : '#{APP_ID}', // the app ID you get when you register your app in http://www.facebook.com/developers/
+      status : true, // check login status
+      cookie : true, // enable cookies to allow the server to access the session
+      xfbml  : true,  // parse XFBML
+      channelUrl : "#{APP_URL}/fb_channel.html"
+    });
+    $('.share').click(function (){
+      link = $('#link').val();
+      title = $('#title').val();
+      caption = $('#caption').val();
+      description = $('#description').val();
+      picture = $('#image').val();
+      var obj = {
+        method: 'feed',
+        link: link,
+        picture: picture,
+        name: title,
+        caption: caption,
+        description: description
+      };
+      function callback(response) {
+          document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+      }
+      FB.ui(obj, callback);
+    });
+    $('.send').click(function (){
+      link = $('#link').val();
+      title = $('#title').val();
+      FB.ui({
+          method: 'send',
+          name: title,
+          link: link,
+          });
+    });
+    $(function(){
+        $('.related-news-container').slimScroll({
+            height: '600px',
+            railVisible: true,
+            alwaysVisible: true
+        });
+    });
+    $(".call-event").click(function(e) {
+      e.preventDefault();
+      id = $(this).attr('data');
+      fb_id = "#{@user.fb_id if @user}";
+      title = encodeURIComponent($('input#news_search').val());
+      url = '/news/'+id+'?fb_id='+fb_id;
+      var loading = "<img alt='Loader' src='/assets/loader.gif' />";
+      $("#main").css('margin-top', '0px').hide();
+      $('#loading').html(loading).show().delay(800);
+      $("#main").load(url, function(response, status, xhr) {
+
+          if (status == "error") {
+              $("#main").html('<h1>No Results Found</h1>');
+          }
+          else{
+           FB.Canvas.scrollTo(0,0);
+           $("#main").fadeIn(900).animate({'marginTop': '-60px'},400);
+           $('#loading img').fadeOut(1200);
+          }
+      });
+    });
+  });
+  setTimeout('facebook_post()', 10000);
+
+
+= render "shared/fb_share_script"
+

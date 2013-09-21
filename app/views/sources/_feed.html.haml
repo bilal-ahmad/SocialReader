@@ -1,0 +1,13 @@
+.field
+  = f.label :name
+  = f.text_field :name
+.field
+  = f.label :logo
+  = f.text_field :logo
+.field
+  = f.label :url
+  = f.text_field :url
+.field
+  = f.label :status
+  = f.check_box :status
+  - f.fields_for :feeds

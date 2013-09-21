@@ -1,0 +1,128 @@
+#loading
+#tiles
+  .tile.element{:style => 'width:620px', :id =>"tile-#{@news.first.id}"}
+    .news-heading
+      .heading
+        %h1
+          %span
+            =link_to "#{@news.first.category.titleize}", news_path(@news.first, :fb_id => "#{@user.fb_id if @user}"), :data => @news.first.id, :class => 'call-event'
+    .news-image
+      = link_to(image_tag("#{@news.first.image}", :id => "image-#{@news.first.id}", :style => "width:620px;height:400px;"), news_path(@news.first, :fb_id => "#{@user.fb_id if @user}"), :data => @news.first.id, :class => 'call-event') if @news.first.image.present?
+    .news-description
+      %h1
+        = link_to "#{@news.first.title}", news_path(@news.first,:fb_id => "#{@user.fb_id if @user}"), :data => @news.first.id, :class => 'call-event'
+      .news-source
+        = link_to image_tag(@news.first.source.logo, :class => "source-tag"), news_path(@news.first, :fb_id => "#{@user.fb_id if @user}") if @news.first.source.logo
+        .news-source-info
+          %span.news-source-name
+            = link_to @news.first.source.name.titleize, news_path(@news.first, :fb_id => "#{@user.fb_id if @user}")
+          %span.news-date
+            = time_ago_in_words(@news.first.published_at)
+      %a.call-event{:href => "#{news_path(@news.first, :fb_id => "#{@user.fb_id if @user}")}" , :data => @news.first.id}
+        %p
+          = format_text(275, @news.first.summary.html_safe)
+      .sharing-bar-container
+        %ul.sharing-bar
+          %li
+            %span.btn.news-share-btn{:id => @news.first.id}
+              Share
+        .clr
+  - news_count = 2
+  - @news.drop(1).each do |news|
+    .tile{:id =>"tile-#{news.id}"}
+      .news-heading
+        .heading
+          %h1
+            %span
+              =link_to "#{news.category.present? ? news.category.titleize : news.source.name}", news_path(news, :fb_id => "#{@user.fb_id if @user}"), :data => news.id, :class => 'call-event'
+      - if news.image.present?
+        .news-image
+          = link_to image_tag(news.image, :id => "image-#{news.id}"), news_path(news, :fb_id => "#{@user.fb_id if @user}"), :data => news.id, :class => 'call-event'
+      .news-description
+        %h1
+          =link_to "#{news.title}", news_path(news, :fb_id => "#{@user.fb_id if @user}"), :data => news.id, :class => 'call-event'
+        .news-source
+          = link_to image_tag(news.source.logo, :class => "source-tag"), news_path(news, :fb_id => "#{@user.fb_id if @user}") if news.source.logo
+          .news-source-info
+            %span.news-source-name
+              = news.source.name.titleize
+            %span.news-date
+              = time_ago_in_words(news.published_at)
+        %a.call-event{:href => news_path(news, :fb_id => "#{@user.fb_id if @user}"), :data => news.id}
+          %p
+            = format_text(140, news.summary.html_safe)
+        .sharing-bar-container
+          %ul.sharing-bar
+            %li
+              %span.btn.news-share-btn{:id => news.id}
+                Share
+          .clr
+    - news_count = news_count + 1
+
+:javascript
+  ;(function($){
+  	$(document).ready(function() {
+  		$('#main').children().each(function()
+  		{
+  			$(this).freetile({
+  				animate: true,
+  				elementDelay: 30
+  			});
+  		});
+  	});
+  })(jQuery)
+  $(document).ready(function(){
+    window.fbAsyncInit = function() {
+      FB.ui({
+              client_id: "#{APP_ID}",
+              method: 'oauth',
+              display: 'popup',
+              scope: 'user_about_me,user_likes,publish_actions,email',
+      });
+      FB.Canvas.setAutoGrow();
+    }
+    $(".news-share-btn").click(function(e){
+      id = $(this).attr('id');
+      tile = "#tile-"+id;
+      image = "#image-"+id;
+      link = "#{APP_URL}/news/"+id
+      picture= $(image).attr('src');
+      headline = $("#tile-"+id).find(".news-description h1 a").html();
+      description = $("#tile-"+id).find(".news-description a p").html();
+      var obj = {
+          method: 'feed',
+          link: link,
+          picture: picture,
+          name: headline,
+          caption: headline,
+          description: description
+      }
+      function callback(response) {
+          document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+      }
+
+      FB.ui(obj, callback);
+    });
+
+    $(".call-event").click(function(e) {
+      e.preventDefault();
+      id = $(this).attr('data');
+      fb_id = "#{@user.fb_id if @user}";
+      title = encodeURIComponent($('input#news_search').val());
+      url = '/news/'+id+'?fb_id='+fb_id;
+      var loading = "<img alt='Loader' src='/assets/loader.gif' />";
+      $("#main").css('margin-top', '0px').hide();
+      $('#loading').html(loading).show().delay(800);
+      $("#main").load(url, function(response, status, xhr) {
+
+          if (status == "error") {
+              $("#main").html('<h1>No Results Found</h1>');
+          }
+          else{
+           FB.Canvas.scrollTo(0,0);
+           $("#main").fadeIn(900).animate({'marginTop': '-60px'},400);
+           $('#loading img').fadeOut(1200);
+          }
+      });
+    });
+  });

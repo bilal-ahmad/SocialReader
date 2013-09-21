@@ -1,0 +1,14 @@
+#loading
+- if !@user
+  .validate-user-container
+    #validate-user
+      .validate-user-text
+        %h1
+          Social Reader finds what you want and helps you share it
+      .validate-login
+        = link_to 'Sign In', '#', :onclick => 'javascript:getFacebookLogin()',  :id => 'fb-login', :class => 'btn-login'
+      .clr
+#main{role:"main"}
+  =render 'news'
+
+

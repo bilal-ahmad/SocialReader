@@ -1,0 +1,88 @@
+!!!
+%html
+  %head
+  %title SocialTribune
+  = stylesheet_link_tag    "style", 'rain', 'scaffolds', :media => "all"
+  = javascript_include_tag "application"
+  = csrf_meta_tags
+  %body{:style=>'overflow: hidden'}
+    #fb-root
+    #user-info
+    %script{:src => "http://connect.facebook.net/en_US/all.js"}
+    #container-main
+    :javascript
+      $(document).ready(function(){
+        window.fbAsyncInit = function() {
+          FB.ui({
+                  client_id: "#{APP_ID}",
+                  method: 'oauth',
+                  display: 'popup',
+                  scope: 'user_about_me,user_likes,publish_actions,email',
+          });
+          FB.Canvas.setAutoGrow();
+        }
+        $(".news-share-btn").click(function(e){
+          id = $(this).attr('id');
+          tile = "#tile-"+id;
+          image = "#image-"+id;
+          link = "#{APP_URL}/news/"+id
+          picture= $(image).attr('src');
+          headline = $("#tile-"+id).find(".news-description h1 a").html();
+          description = $("#tile-"+id).find(".news-description a p").html();
+          var obj = {
+              method: 'feed',
+              link: link,
+              picture: picture,
+              name: headline,
+              caption: headline,
+              description: description
+          }
+          function callback(response) {
+              document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+          }
+
+          FB.ui(obj, callback);
+        });
+
+      });
+      function getFacebookLogin(){
+          FB.login(function(response) {
+              var uid = response.authResponse.userID;
+              var accessToken = response.authResponse.accessToken;
+              var loading = "<img alt='Loader' src='/assets/loader.gif' />";
+              var profile_pic = "<img src='http://graph.facebook.com/"+uid+"/picture' />";
+              url = '/?type=Headlines&fb_id='+uid+'&token='+accessToken;
+              if (response.authResponse) {
+                $('.validate-user-container').hide();
+                $("#main").hide();
+                $('#loading').html(loading).show().delay(800);
+                $("#main").load(url, function(response, status, xhr) {
+                    if (status == "error") {
+                    }
+                    else{
+                        $('#sharing-status').addClass('sharing-btn').attr('data', uid);;
+                        $('.user-info').html(profile_pic);
+                        $("#main").fadeIn(900).animate({'marginTop': '-60px'},400);
+                        $('#loading img').fadeOut(1200);
+                    }
+                });
+              } else {
+                  // User cancelled login or did not fully authorize
+              }
+          }, {scope: 'publish_stream'});
+      }
+      function inviteFriends(){
+        FB.ui({
+          method: 'apprequests',
+          message: 'Get updated and know your friends reading habits.'
+        });
+      }
+
+
+    #container-header
+      = render "shared/fb_script"
+      = render "shared/header"
+      = render 'shared/header_ads'
+    = yield
+    #container-footer
+      -#= render "shared/footer"

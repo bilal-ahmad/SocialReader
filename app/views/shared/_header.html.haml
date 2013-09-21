@@ -1,0 +1,64 @@
+#sub-header
+  .logo
+    %span
+      SocialTribune
+  #nav-bar
+    %ul
+      %li{:class => params[:type] == 'headlines' ? 'headlines-active' : 'headlines'}
+        = link_to "Headlines", root_path
+      %li{:class => params[:type] == 'business' ? 'business-active' : 'business'}
+        = link_to 'Business', home_path(:type => 'business')
+      %li{:class => params[:type] == 'entertainment' ? 'entertainment-active' : 'entertainment'}
+        = link_to 'Entertainment', root_path(:type => 'entertainment')
+      %li{:class => params[:type] == 'sports no-border' ? 'sports-active no-border' : 'sports'}
+        = link_to 'Sports', root_path(:type => 'sports')
+    .search
+      = form_tag('/', :method => 'get', :id => 'search-form') do
+        = text_field_tag :q, '', :id => 'news_search', data: {autocomplete_source: news_title_path(:fb_id => (@user.fb_id if @user))}
+        .search-btn
+          %button
+    = render 'shared/user_info'
+
+:javascript
+    prevClass = '';
+    activeClass = '';
+    $(".search-btn button").click(function(e) {
+      e.preventDefault();
+      $('#loader').show();
+      title = encodeURIComponent($('input#news_search').val());
+      url = '/search?q='+title+'&fb_id='+"#{@user.fb_id if @user}";
+      $("#main").load(url, function(response, status, xhr) {
+          if (status == "error") {
+              $("#main").html('<h1>No Results Found</h1>');
+          }
+          else{
+                $('#loader').hide();
+          }
+      });
+
+    });
+    $("#nav-bar a").click(function(e) {
+      e.preventDefault();
+      type = encodeURIComponent($(this).html());
+      url = '/?type='+type+'&fb_id='+"#{@user.fb_id if @user}";
+      var loading = "<img alt='Loader' src='/assets/loader.gif' />";
+      $("#container-inner").fadeOut(900);
+      $("#main").css('margin-top', '0px').hide();
+      $('#loading').html(loading).show().delay(800);
+      $("#main").load(url, function(response, status, xhr) {
+          if (status == "error") {
+              $("#main").html('<h1>No Results Found</h1>');
+          }
+          else{
+                $("#main").fadeIn(900).animate({'marginTop': '-60px'},400);
+                $('#loading img').fadeOut(1200);
+                activeClass = type.toLowerCase()+'-active';
+                $('.'+type.toLowerCase()).addClass(activeClass);
+                $('.'+prevClass).removeClass(prevClass);
+
+          }
+      });
+      prevClass = activeClass;
+
+    });
+

@@ -1,0 +1,4 @@
+.user-info
+  = image_tag(@user.image, alt:@user.name, title:@user.name) if @user
+.instant-sharing
+  #sharing-status{:class => "#{@user.sharing ? 'sharing-on': 'sharing-btn' if @user}",:data => "#{@user.fb_id if @user}"}

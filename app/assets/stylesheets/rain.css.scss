@@ -1,0 +1,297 @@
+@mixin rounded-corners($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+@mixin custom-rounded-corners($radius1, $radius2, $radius3, $radius4) {
+  border-radius: $radius1 $radius2 $radius3 $radius4;
+  -moz-border-radius: $radius1 $radius2 $radius3 $radius4;
+  -webkit-border-radius: $radius1 $radius2 $radius3 $radius4;
+}
+
+@mixin container-border($breadth) {
+  border: $breadth solid black;
+}
+
+/**
+ * Grid container
+ */
+#tiles {
+list-style-type: none;
+position: relative; /** Needed to ensure items are laid out relative to this container **/
+margin: 0;
+}
+
+/**
+ * Grid items
+ */
+#tiles .tile {
+  width: 300px;
+  /*background-color: #ffffff;*/
+  border: 1px solid #dedede;
+  @include rounded-corners(10px);
+  //display: none; /** Hide items initially to avoid a flicker effect **/
+  cursor: pointer;
+
+  padding: 0;
+  margin: 0 15px 20px 0;
+  transition: box-shadow .2s;
+  -moz-transition: box-shadow .2s;
+  -webkit-transition: box-shadow .2s;
+  -o-transition: box-shadow .2s;
+  background-color: #f9f9f9;
+  //box-shadow: 0 0 2px rgba(0,0,0,.2),0 2px 1px rgba(0,0,0,.22);
+  .news-heading:hover{
+    background-color: rgba(0,0,0,.02);
+  }
+  .news-heading{
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    transition: background-color .2s;
+    -moz-transition: background-color .2s;
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+    .heading{
+      display: table;
+      overflow: hidden;
+      width: 100%;
+      height: 38px;
+      line-height: 38px;
+      padding: 0;
+      text-align: right;
+      h1{
+        display: table-cell;
+        max-width: 200px;
+        margin: 0;
+        padding: 0 0 0 6px;
+        text-align: left;
+        font-size: 15px;
+        font-weight: 500;
+        float: left;
+        span{
+          a{
+            max-width: 100%;
+            margin: 1px 0 0 0;
+            padding: 0 25px 0 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            transition: color .1s;
+            -moz-transition: color .1s;
+            -webkit-transition: color .1s;
+            -o-transition: color .1s;
+            display: inline-block;
+            vertical-align: middle;
+            text-shadow: 0 1px 0 white;
+            width: auto;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: left;
+            font-size: 15px;
+          }
+
+        }
+      }
+      img{
+        width: 40px;
+        margin-right: 10px;
+      }
+
+    }
+  }
+  .news-image{
+    img{
+      display: block;
+      margin: 0 auto;
+      width: 300px;
+    }
+  }
+
+  .news-description:hover{
+    background-color: rgba(0,0,0,.02);
+  }
+  .news-source{
+    margin-left: 13px;
+    line-height: 10px;
+    img{
+      width: 20px;
+      height: 20px;
+      margin: 5px 5px 0 0;
+      float: left;
+    }
+    .news-source-info{
+      display: table-cell;
+      height: 26px;
+      vertical-align: middle;
+      white-space: nowrap;
+      line-height: 10px;
+      span.news-source-name{
+        font-weight: 500;
+        color: #444;
+        font-size: 12px;
+        line-height: 16px;
+      }
+      span.news-date{
+        clear: both;
+        display: block;
+        color: #888;
+        font-size: 11px;
+      }
+
+    }
+  }
+  .news-description{
+    overflow: hidden;
+    transition: background-color .2s;
+    -moz-transition: background-color .2s;
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+    h1:hover{
+      color: #4E64AA;
+    }
+    h1{
+      clear: both;
+      margin: 0;
+      padding: 10px 13px 10px 13px;
+      text-shadow: 0 1px 0 white;
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 26px;
+      transition: color .1s;
+      -moz-transition: color .1s;
+      -webkit-transition: color .1s;
+      -o-transition: color .1s;
+    }
+    p{
+      margin: 0;
+      padding: 10px 13px 5px 13px;
+      color: #111;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.4;
+    }
+  .sharing-bar-container{
+    position: relative;
+    padding: 10px 14px 10px 14px;
+    transition: background-color .2s;
+    -moz-transition: background-color .2s;
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+    ul.sharing-bar{
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #000;
+      li{
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 14px;
+        line-height: 12px;
+        float: right;
+      }
+  }
+  }
+
+  }
+}
+
+#tiles li img {
+display: block;
+    margin: 0 auto;
+}
+
+.btn{
+  display: inline-block;
+  padding: 6px 8px 4px 8px;
+  border: 1px solid #ccc;
+  background-color: #fdfafb;
+  background: #fdfafb;
+  background: -moz-linear-gradient(top,#fdfafb 0,#f0eded 100%);
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fdfafb),color-stop(100%,#f0eded));
+  background: -webkit-linear-gradient(top,#fdfafb 0,#f0eded 100%);
+  background: -o-linear-gradient(top,#fdfafb 0,#f0eded 100%);
+  background: -ms-linear-gradient(top,#fdfafb 0,#f0eded 100%);
+  background: linear-gradient(to bottom,#fdfafb 0,#f0eded 100%);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#fdfafb', endColorstr='#f0eded', GradientType=0);
+  color: #111;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.1);
+  text-shadow: 0 1px #ccc;
+  cursor: pointer;
+  border-color: rgba(0,0,0,.15) rgba(0,0,0,.15) rgba(0,0,0,.25);
+}
+
+.btn:hover{
+  background: #f4f4f4;
+  background: -moz-linear-gradient(top,#f4f4f4 0,#e8e8e8 100%);
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#f4f4f4),color-stop(100%,#e8e8e8));
+  background: -webkit-linear-gradient(top,#f4f4f4 0,#e8e8e8 100%);
+  background: -o-linear-gradient(top,#f4f4f4 0,#e8e8e8 100%);
+  background: -ms-linear-gradient(top,#f4f4f4 0,#e8e8e8 100%);
+  background: linear-gradient(to bottom,#f4f4f4 0,#e8e8e8 100%);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#e8e8e8', GradientType=0);
+}
+
+.btn:active{
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3);
+}
+
+/**
+ * Grid item text
+ */
+#tiles li p {
+color: #666;
+font-size: 12px;
+margin: 7px 0 0 7px;
+}
+
+/**
+ * Some extra styles to randomize heights of grid items.
+ */
+#tiles ali:nth-child(3n) {
+height: 175px;
+}
+
+#tiles ali:nth-child(4n-3) {
+padding-bottom: 30px;
+}
+
+#tiles ali:nth-child(5n) {
+height: 250px;
+}
+
+/** General page styling **/
+  
+html {
+background-color: #e9e9e9;
+}
+
+#main {
+  width: 960px;
+  margin: 0 auto;
+  min-height: 600px;
+  z-index: 99999999;
+
+}
+
+header h1 {
+text-align: center;
+font-size: 24px;
+font-weight: normal;
+margin: 30px 0 3px 0;
+}
+
+header p {
+text-align: center;
+font-size: 13px;
+color: #777;
+margin: 0;
+}
+
+

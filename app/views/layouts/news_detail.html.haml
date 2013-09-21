@@ -1,0 +1,67 @@
+!!!
+%html
+
+  %head{:prefix => "og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# tnn-dev: http://ogp.me/ns/fb/tnn-dev#"}
+    %meta{:property =>"fb:app_id", :content=> "#{APP_ID}"}
+    %meta{:property =>"og:type", :content=> "article"}
+    %meta{:property =>"og:url", :content=> "#{news_url(@news)}"}
+    %meta{:property =>"og:title", :content=> @news.title}
+    %meta{:property =>"og:description", :content=> @news.summary}
+    %meta{:property =>"og:image", :content=> @news.image}
+    %title SocialTribune
+  = stylesheet_link_tag    "style", 'rain', 'scaffolds', :media => "all"
+  = javascript_include_tag "application"
+  = csrf_meta_tags
+  %body
+    #fb-root
+    %script{:src => "http://connect.facebook.net/en_US/all.js"}
+    #container-header
+      = render "shared/header"
+    #container-main
+      = render 'shared/header_ads'
+      #loading
+      = yield
+      #main
+    #container-footer
+      -#= render "shared/footer"
+    :javascript
+      function facebook_post(){
+        if("#{@user.try(:sharing)}" == "true"){
+          FB.getLoginStatus(function (response) {
+              if (response.authResponse) {
+                FB.api('/me/news.reads', 'post', { article: "#{news_url(@news, :fb_id => "#{@user.fb_id if @user}")}", access_token: response.authResponse.accessToken }, function(response) {
+                  if (!response || response.error) {
+                    console.log(response);
+                  } else {
+                  }
+                });
+              } else {
+                  // do something...maybe show a login prompt
+              }
+          }, { scope:'publish_actions' });
+        }
+        else{
+          //alert("Not posting on facebook.");
+        }
+      }
+      function postToFeed() {
+        link = $('#link').val();
+        title = $('#title').val();
+        caption = $('#caption').val();
+        description = $('#description').val();
+        picture = $('#image').val();
+        var obj = {
+          method: 'feed',
+          link: link,
+          picture: picture,
+          name: title,
+          caption: caption,
+          description: description
+        };
+        function callback(response) {
+            document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+        }
+        FB.ui(obj, callback);
+      }
+
+      setTimeout('facebook_post()', 10000);

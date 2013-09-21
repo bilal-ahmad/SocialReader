@@ -1,0 +1,867 @@
+body {
+  background-color: #eaeae9;
+  width: 100%;
+  height: 100%;
+  font-family: "MuseoSans",arial,helvetica,"dejavu sans",sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+  body {
+    background-color:yellow;
+  }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+  body {
+    background-color:orange;
+  }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+  body {
+    background-color:black;
+  }
+}
+
+/* iPhone 4 - (portrait) ---------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 2) and (orientation:portrait),
+only screen and (min-device-pixel-ratio : 2)  and (orientation:portrait){
+  body {
+    background-color:red;
+  }
+}
+
+/* iPhone 4 - (landscape) ---------- */
+@media screen and (-webkit-min-device-pixel-ratio : 2) and (orientation:landscape), screen and (min-device-pixel-ratio : 2) and (orientation:landscape){
+  body {
+    background-color:pink;
+  }
+}
+
+/* Smart phones (landscape) ----------- */
+@media only screen
+and (min-width : 321px)
+and (max-width: 480px) {
+  body {
+    background-color:green;
+  }
+}
+
+/* Smart phones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+  body {
+    background-color:purple;
+  }
+}
+
+@mixin rounded-corners($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+@mixin custom-rounded-corners($radius1, $radius2, $radius3, $radius4) {
+  border-radius: $radius1 $radius2 $radius3 $radius4;
+  -moz-border-radius: $radius1 $radius2 $radius3 $radius4;
+  -webkit-border-radius: $radius1 $radius2 $radius3 $radius4;
+}
+
+@mixin container-border($breadth) {
+  border: $breadth solid black;
+}
+
+#container-main{
+  width: 100%;
+  margin: 15px 0;
+}
+
+#container-inner{
+  width: 960px;
+  margin: 0 auto;
+  .news-detail{
+    display: table-cell;
+    vertical-align: top;
+    max-width: 640px;
+    float: left;
+    @include rounded-corners(8px);
+    background-color: #f9f9f9;
+    border-right: 1px solid #e0e0e0;
+    .news-heading:hover{
+      background-color: rgba(0,0,0,.02);
+    }
+    .news-detail-comment{
+      width: 600px;
+      margin: 0 auto;
+      padding: 10px 0;
+    }
+    .news-description-detail{
+      border-bottom: 1px solid #CCCCCC;
+      p{
+        margin: 0;
+        padding: 20px 20px 0 20px;
+        color: #666;
+        font-size: 18px;
+        line-height: 1.7;
+        font-family: he;
+      }
+
+    }
+    .news-heading{
+      border-bottom: 1px solid #ccc;
+      overflow: hidden;
+      transition: background-color .2s;
+      -moz-transition: background-color .2s;
+      -webkit-transition: background-color .2s;
+      -o-transition: background-color .2s;
+      .heading{
+        display: table;
+        overflow: hidden;
+        width: 100%;
+        height: 38px;
+        line-height: 38px;
+        padding: 0;
+        text-align: right;
+        h1{
+          display: table-cell;
+          max-width: 200px;
+          margin: 0;
+          padding: 0 0 0 6px;
+          text-align: left;
+          font-size: 15px;
+          font-weight: 500;
+          span{
+            a{
+              max-width: 100%;
+              margin: 1px 0 0 0;
+              padding: 0 25px 0 0;
+              -webkit-box-sizing: border-box;
+              -moz-box-sizing: border-box;
+              box-sizing: border-box;
+              transition: color .1s;
+              -moz-transition: color .1s;
+              -webkit-transition: color .1s;
+              -o-transition: color .1s;
+              display: inline-block;
+              vertical-align: middle;
+              text-shadow: 0 1px 0 white;
+              width: auto;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              text-align: left;
+              font-size: 15px;
+            }
+
+          }
+        }
+      }
+    }
+    .news-image{
+      background-color: #ffffff;
+      padding: 10px 0;
+      img{
+        display: block;
+        margin: 0 auto;
+        max-width: 600px;
+      }
+    }
+    .news-source{
+      padding: 0 0 10px 15px;
+      line-height: 10px;
+      float: left;
+      img{
+        width: 30px;
+        height: 30px;
+        margin: 5px 5px 0 0;
+        float: left;
+      }
+      .news-source-info{
+        display: table-cell;
+        height: 26px;
+        vertical-align: middle;
+        white-space: nowrap;
+        line-height: 10px;
+        span.news-source-name{
+          font-weight: 500;
+          color: #444;
+          font-size: 16px;
+          line-height: 26px;
+        }
+        span.news-date{
+          clear: both;
+          display: block;
+          color: #888;
+          font-size: 11px;
+        }
+
+      }
+    }
+    .news-original-post{
+      padding: 5px 0px;
+      a{
+        color: #2f759f;
+        font-size: 12px;
+      }
+      a:hover{
+        text-decoration: underline;
+      }
+    }
+    .news-description{
+      overflow: hidden;
+      transition: background-color .2s;
+      -moz-transition: background-color .2s;
+      -webkit-transition: background-color .2s;
+      -o-transition: background-color .2s;
+      margin-bottom: 15px;
+      .fb-like{
+        float: right;
+        width: 300px;
+      }
+
+      h1:hover{
+        color: #4E64AA;
+      }
+      h1{
+        clear: both;
+        margin: 0;
+        padding: 10px 13px 10px 13px;
+        text-shadow: 0 1px 0 white;
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 50px;
+        transition: color .1s;
+        -moz-transition: color .1s;
+        -webkit-transition: color .1s;
+        -o-transition: color .1s;
+      }
+      .sharing-bar-container{
+        position: relative;
+        padding: 10px 14px 10px 14px;
+        transition: background-color .2s;
+        -moz-transition: background-color .2s;
+        -webkit-transition: background-color .2s;
+        -o-transition: background-color .2s;
+        ul.sharing-bar{
+          display: block;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          color: #000;
+          li{
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 14px;
+            line-height: 12px;
+            float: right;
+          }
+        }
+      }
+      .news-detail-comment{
+        width: 600px;
+        margin: 0 auto;
+        padding: 10px 0;
+      }
+
+    }
+
+  }
+  .news-related{
+    width: 300;
+  }
+  .news-detail-sharing{
+    height: 25px;
+    padding: 10px;
+    border-bottom: 1px solid #cccccc;
+  }
+
+
+}
+
+#container-header{
+  width: 100%;
+  #header{
+    //width: 940px;
+    height: 55px;
+    margin: 0 auto;
+    padding: 0 10px;
+    .logo{
+      width: 200px;
+      float: left;
+      h1{
+        padding: 10px 0;
+        margin: 0;
+        height: 38px;
+      }
+    }
+    .wrapper-sharing{
+      padding: 18px;
+      width: 150px;
+      float: left;
+      .fb-like span{
+        height: 24px !important;
+      }
+    }
+    }
+  #sub-header{
+    height: 50px;
+    clear: both;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: #323232;
+    background: -webkit-gradient(linear,left bottom,left top,color-stop(0,#1e1e1e),color-stop(1,#323232));
+    background: -ms-linear-gradient(bottom,#1e1e1e,#323232);
+    background: -moz-linear-gradient(center bottom,#1e1e1e 0,#323232 100%);
+    background: -o-linear-gradient(#323232,#1e1e1e);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#323232', endColorstr='#1e1e1e', GradientType=0);
+    -webkit-box-shadow: 0 2px 3px 0 rgba(0,0,0,.3);
+    -moz-box-shadow: 0 2px 3px 0 rgba(0,0,0,.3);
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,.3);
+    z-index: 1000;
+    min-width: 1024px;
+      .user-info{
+        width: 35px;
+        float: left;
+        padding: 2px 0;
+        margin-left: 50px;
+        img{
+          float: left;
+          width: 35px;
+        }
+      }
+      .logo{
+        width: 130px;
+        float: left;
+        color: white;
+        padding: 12px;
+        font-size: 22px;
+      }
+    .instant-sharing{
+      float: right;
+      margin-left: 50px;
+      .sharing-btn{
+        background: url("/assets/sharing.png") no-repeat;
+        width: 35px;
+        height: 35px;
+        background-size: 35px;
+        text-align: center;
+      }
+      .sharing-btn:active{
+        background: url("/assets/sharing.png") no-repeat;
+        width: 30px;
+        height: 30px;
+        background-size: 30px;
+        margin: 5px 0 0 3px;
+      }
+      span{
+        width: 50px;
+        display: block;
+        top: 0;
+        left: 0;
+        text-align: center;
+        float: left;
+      }
+    }
+      #nav-bar{
+      max-width: 940px;
+      margin: 0 auto;
+      text-shadow: none;
+      height: 35px;
+      margin-top: 8px;
+      float: left;
+      ul{
+        margin: 0;
+        padding: 0;
+        width: 420px;
+        float: left;
+        li.headline:hover > a{
+          background-color: #2f759f;
+          color: white;
+        }
+        li.world:hover > a{
+          background-color: #8795C4;
+          color: white;
+        }
+        li.world:hover > a{
+          background-color: #8795C4;
+          color: white;
+        }
+        li.world-active > a{
+          background-color: #8795C4;
+          color: white;
+        }
+        li.national:hover > a{
+          background-color: #4E64AA;
+          color: white;
+        }
+        li.national-active > a{
+          background-color: #4E64AA;
+          color: white;
+        }
+        li.business:hover > a{
+          background-color: #00B8BC;
+          color: white;
+        }
+        li.business-active > a{
+          background-color: #00B8BC;
+          color: white;
+        }
+        li.entertainment:hover > a{
+          background-color: #870169;
+          color: white;
+        }
+        li.entertainment-active> a{
+          background-color: #870169;
+          color: white;
+        }
+        li.sports:hover > a{
+          background-color: #66813A;
+          color: white;
+        }
+        li.sports-active > a{
+          background-color: #66813A;
+          color: white;
+        }
+        li{
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          display: inline;
+          height: 23px;
+          padding: 0px;
+          border-right: 1px solid #CCCCCC;
+          a{
+            display: inline-block;
+            margin: 0;
+            padding: 5px 11px;
+            margin: 5px;
+            border: 0;
+            transition: color .1s;
+            -moz-transition: color .1s;
+            -webkit-transition: color .1s;
+            -o-transition: color .1s;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: capitalize;
+            color: #a4a4a4;
+          }
+        }
+      }
+  }
+  }
+}
+
+.toggle-switch{
+  min-height: 20px;
+  padding: 3px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  @include rounded-corners(4px);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+.active-toggle-btn{
+  background: royalblue;
+  color:  white;
+  @include rounded-corners(4px);
+}
+
+/******************Helper Classes******************/
+.clr{
+  clear: both;
+}
+
+.no-border{
+  border: none !important;
+}
+
+a {
+  text-decoration: none;
+}
+/******************Helper Classes End******************/
+.search{
+  position: relative;
+  top: 6px;
+  float: left;
+  input{
+    -webkit-appearance: none;
+    width: 175px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    padding-left: 6px;
+    border: 0;
+    -webkit-border-radius: 4px 0 0 4px;
+    @include custom-rounded-corners(4px, 0, 0, 4px);
+    background-color: #f9f9f9;
+    vertical-align: top;
+    background: #7a7a7a;
+    font-weight: 500;
+    font-size: 14px;
+    color: #CCCCCC;
+  }
+  input:focus{
+    outline: none;
+  }
+  .search-btn{
+    display: inline-block;
+    margin-left: -7px;
+    background: #7a7a7a;
+    @include custom-rounded-corners(0, 4px, 4px, 0);
+    button{
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: 0;
+      height: 22px;
+      width: 26px;
+      background-image: url(/assets/search.png);
+      background-size: 22px;
+      background-repeat: no-repeat;
+      overflow: hidden;
+      text-indent: -9999px;
+    }
+  }
+}
+
+.send-btn{
+  display: inline-block;
+  max-height: 24px;
+  margin-right: 8px;
+  padding: 1px 6px 4px;
+  border: 1px solid #cad4e7;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background: #eceef5;
+  cursor: pointer;
+  color: #3b5998;
+  font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+  font-size: 13px;
+  line-height: 1.28;
+  text-align: center;
+  text-decoration: none;
+}
+
+.share-btn{
+
+  display: inline-block;
+  max-height: 24px;
+  margin-right: 8px;
+  padding: 1px 6px 4px;
+  border: 1px solid #3B5998;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background: #6D84B4;
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#6D84B4', endColorstr='#415495');
+  background: -webkit-gradient(linear,left top,left bottom,from(#6d84b4),to(#415495));
+  background-image: -moz-linear-gradient(top,#6d84b4,#415495);
+  background-image: linear-gradient(to bottom right,#6d84b4,#415495);
+  cursor: pointer;
+  color: #fff;
+  font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.28;
+  text-align: center;
+  text-decoration: none;
+}
+
+.tweet-btn{
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  color: #333;
+  font-family: 'Helvetica Neue',Arial,sans-serif;
+  font-size: 13px;
+  line-height: 19px;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  background-color: #f8f8f8;
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#dedede));
+  background-image: -moz-linear-gradient(top,#fff,#dedede);
+  background-image: -o-linear-gradient(top,#fff,#dedede);
+  background-image: -ms-linear-gradient(top,#fff,#dedede);
+  background-image: linear-gradient(top,#fff,#dedede);
+  padding: 1px 6px 2px 25px;
+  border: #ccc solid 1px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #333;
+  font-weight: 700;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  max-height: 24px;
+  max-width: 98%;
+  overflow: hidden;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.right-panel{
+  padding: 0 8px;
+  width: 290px;
+  background-color: #f9f9f9;
+  margin-left: 13px;
+  float: left;
+  @include rounded-corners(8px);
+  h3{
+    color: #666666;
+    font-size: 14px;
+  }
+  .related-news-container{
+    .related-news:hover{
+      background: #ffffff;
+    }
+    .related-news{
+      padding-bottom: 8px;
+      margin-bottom: 25px ;
+      width: 96%;
+      height: auto;
+      .source-logo{
+        width: 30px;
+        float: left;
+      }
+      .title{
+        width: 200px;
+        float: left;
+        margin-right: 10px;
+        font-size: 16px;
+        a{
+          color: #000000;
+        }
+        .news-source{
+          line-height: 10px;
+          margin-top: 2px;
+          img{
+            width: 17px;
+            height: 17px;
+            margin: 5px 5px 0 0;
+            float: left;
+          }
+          .news-source-info{
+            display: table-cell;
+            height: 26px;
+            vertical-align: middle;
+            white-space: nowrap;
+            line-height: 10px;
+            span.news-source-name{
+              font-weight: 500;
+              color: #444;
+              font-size: 10px;
+              line-height: 16px;
+            }
+            span.news-date{
+              clear: both;
+              display: block;
+              color: #888;
+              font-size: 10px;
+            }
+
+          }
+        }
+      }
+    }
+  }
+}
+.line-divider-small{
+  background: url('/assets/line-divider.png');
+  width: 100%;
+  height: 5px;
+
+}
+
+
+
+/****************Footer Start*********************/
+#footer{
+  width: 100%;
+  height: 100px;
+  background-color: #444444;
+  bottom:0;
+  left:0;
+}
+
+/****************Footer End***********************/
+
+.loader{
+  width: 100%;
+  text-align: center;
+  height: 100px;
+  display: none;
+}
+
+.header-ads{
+  width: 100%;
+  height: 75px;
+  text-align: center;
+  margin-top: 50px;
+  clear: both;
+  background-color: #dbdbdb;
+  -webkit-box-shadow: inset 0 -3px 3px rgba(0,0,0,.1);
+  -moz-box-shadow: inset 0 -3px 3px rgba(0,0,0,.1);
+  box-shadow: inset 0 -3px 3px rgba(0,0,0,.1);
+  border-bottom: 1px solid #f9f9fa;
+  margin-bottom: 20px
+}
+
+
+/***************************************************/
+
+// Place all the styles related to the news controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+ul.ui-autocomplete {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px #999;
+  cursor: default;
+  li {
+    background-color: #FFF;
+    border-top: solid 1px #DDD;
+    margin: 0;
+    padding: 0;
+    a {
+      color: #4E64AA;
+      display: block;
+      padding: 3px;
+      font-size: 14px;
+    }
+    a.ui-state-hover, a.ui-state-active {
+      background-color: #FFFCB2;
+    }
+  }
+}
+
+.ui-autocomplete {
+  max-height: 100px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+  height: 100px;
+}
+.ui-helper-hidden-accessible { display:none; }
+
+.sharing-on{
+  background: url("/assets/sharing-on.png") no-repeat;
+  width: 35px;
+  height: 35px;
+  background-size: 35px;
+  margin: 0px 5px 0 0;
+}
+.sharing-off{
+  background: url("/assets/sharing.png") no-repeat;
+  width: 35px;
+  height: 35px;
+  background-size: 35px;
+  margin: 0px 5px 0 0;
+}
+
+.hide{
+  display: none;
+}
+
+.validate-user-container{
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  background-color: #f9f9fa;
+  box-shadow: 0 0 1px rgba(0,0,0,.2),0 1px 0 rgba(0,0,0,.22);
+  #validate-user{
+    padding: 20px 40px;
+    .validate-user-text{
+      width: 380px;
+      float: left;
+      h1{
+        font-size: 30px;
+        font-weight: 500;
+        margin: 0;
+      }
+    }
+    .validate-login
+    {
+      margin-top: 30px;
+      a{
+        padding: 3% 12%;
+        color: white;
+        font-size: 22px;
+      }
+    }
+
+  }
+
+}
+#loading{
+  width: 150px;
+  height: 60px;
+  text-align: center;
+  margin: 0 auto;
+  display: none;
+}
+
+.btn-login{
+  display: inline-block;
+  max-height: 24px;
+  margin: 0;
+  padding: 11px;
+  border: 1px solid #ccc;
+  background-color: #4d7ec0;
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#4d7ec0),to(#476d99));
+  background-image: -webkit-linear-gradient(top,#4d7ec0,#476d99);
+  background-image: -moz-linear-gradient(top,#4d7ec0,#476d99);
+  background-image: -o-linear-gradient(top,#4d7ec0,#476d99);
+  background-image: linear-gradient(to bottom,#4d7ec0,#476d99);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background-clip: padding-box;
+  box-shadow: 0 1px 0 rgba(0,0,0,.1);
+  text-shadow: 0 1px #335172;
+  cursor: pointer;
+  border-color: rgba(0,0,0,.15) rgba(0,0,0,.15) rgba(0,0,0,.25);
+  line-height: 0;
+  text-align: center;
+  text-decoration: none;
+  min-width: 72px;
+}
+
+
+
